@@ -3,7 +3,7 @@ import React from "react";
 
 // Misc
 import FilterInputs from "../../components/FilterInputs";
-import LogTable from "../../components/LogTable";
+import Table from "../../components/Table";
 
 const Updates = () => {
   const data = [
@@ -107,7 +107,7 @@ const Updates = () => {
       <div className="updates-content">
         <FilterInputs />
         <div className="updates-table">
-          <LogTable data={data} />
+          <Table data={data} />
         </div>
       </div>
     </div>

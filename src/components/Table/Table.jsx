@@ -1,11 +1,11 @@
 import "./style.css";
 import React from "react";
 
-const LogTable = (props) => {
+const Table = (props) => {
   const { data } = props;
 
   return (
-    <div className="logTable-root">
+    <div className="table-root">
       <table>
         <thead>
           <tr>
@@ -34,4 +34,4 @@ const LogTable = (props) => {
   );
 };
 
-export default LogTable;
+export default Table;
