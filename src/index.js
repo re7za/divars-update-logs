@@ -7,7 +7,9 @@ import Updates from "./pages/Updates";
 
 ReactDOM.render(
   <React.StrictMode>
-    <Updates />
+    <div dir="rtl">
+      <Updates />
+    </div>
   </React.StrictMode>,
   document.getElementById("root")
 );
