@@ -1,7 +1,25 @@
 import "./style.css";
-import React from "react";
+import React, { useState } from "react";
 
-const Input = ({ title, isRTL, inputType }) => {
+const Input = (props) => {
+  const { title, type, isRTL, inputType, onValueChange } = props;
+
+  const [value, setValue] = useState("");
+  const [valueTimeout, setValueTimeout] = useState();
+
+  const handleChangeValue = (e) => {
+    clearTimeout(valueTimeout);
+
+    const text = e.target.value;
+    setValue(text);
+
+    setValueTimeout(
+      setTimeout(() => {
+        onValueChange(type, text);
+      }, 500)
+    );
+  };
+
   return (
     <div>
       <div className="input-title">
@@ -12,10 +30,12 @@ const Input = ({ title, isRTL, inputType }) => {
           className="input-input"
           type={inputType ?? "text"}
           dir={isRTL ? "rtl" : "ltr"}
+          value={value}
+          onChange={handleChangeValue}
         />
       </div>
     </div>
   );
 };
 
-export default Input;
+export default React.memo(Input);

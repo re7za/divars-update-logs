@@ -1,5 +1,4 @@
 export const sortData = (data, setData, sortInfo) => {
-  // console.log(sortInfo.sortOrder);
   switch (sortInfo.soryBy) {
     case "name":
       sortInfo.sortOrder === "topToBottom"

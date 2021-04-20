@@ -4,8 +4,8 @@
   margin: 50px auto 20px;
 }
 
-.table-root .table-root tr:nth-of-type(odd) {
-  background: #ddd;
+.table-root tr:nth-of-type(odd) {
+  background: #eee;
 }
 
 .table-root th {

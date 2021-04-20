@@ -14,15 +14,12 @@ const sortInfo = {
 };
 
 const Table = (props) => {
-  const { data } = props;
+  const { data, setData } = props;
 
-  /* eslint-disable */
-  const [mutableData, setMutableData] = useState(data);
-  /* eslint-enable */
   const [currentPage, setCurrentPage] = useState(1);
   const indexOfLastRow = currentPage * itemPerPage;
   const indexOfFirstRow = indexOfLastRow - itemPerPage;
-  const currentData = mutableData.slice(indexOfFirstRow, indexOfLastRow);
+  const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
 
   const handlePaginationClick = (newPage) => {
     setCurrentPage(Number(newPage));
@@ -38,7 +35,7 @@ const Table = (props) => {
       sortInfo.sortOrder = "topToBottom";
     }
 
-    sortData([...mutableData], setMutableData, sortInfo);
+    sortData([...data], setData, sortInfo);
   };
 
   return (
@@ -70,7 +67,7 @@ const Table = (props) => {
       <div className="table-pagination">
         <Pagination
           currentPage={currentPage}
-          dataLength={mutableData.length}
+          dataLength={data.length}
           itemPerPage={itemPerPage}
           paginationOnClick={handlePaginationClick}
         />
