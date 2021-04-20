@@ -53,11 +53,44 @@ const Table = (props) => {
   });
   /* eslint-enable */
 
+  const Row = ({ row }) => {
+    const [star, setStar] = useState(!!localStorage.getItem(row.id + "-star"));
+
+    return (
+      <tr>
+        <td
+          className="star"
+          data-column="*"
+          onClick={() => {
+            let newState = !localStorage.getItem(row.id + "-star");
+
+            if (newState) {
+              localStorage.setItem(row.id + "-star", newState);
+            } else {
+              localStorage.removeItem(row.id + "-star");
+            }
+
+            setStar(newState);
+          }}
+        >
+          {star ? "*" : "-"}
+        </td>
+        <td data-column="نام تغییر دهنده">{row.name}</td>
+        <td data-column="تاریخ">{row.date}</td>
+        <td data-column="نام آگهی">{row.title}</td>
+        <td data-column="فیلد">{row.field}</td>
+        <td data-column="مقدار قدیمی">{row.old_value}</td>
+        <td data-column="مقدار جدید">{row.new_value}</td>
+      </tr>
+    );
+  };
+
   return (
     <div className="table-root">
       <table>
         <thead>
           <tr>
+            <th>*</th>
             <th onClick={() => handleHeaderClick("name")}>نام تغییر دهنده</th>
             <th onClick={() => handleHeaderClick("date")}>تاریخ</th>
             <th onClick={() => handleHeaderClick("title")}>نام آگهی</th>
@@ -68,14 +101,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {currentData?.map((row) => (
-            <tr key={row.id}>
-              <td data-column="نام تغییر دهنده">{row.name}</td>
-              <td data-column="تاریخ">{row.date}</td>
-              <td data-column="نام آگهی">{row.title}</td>
-              <td data-column="فیلد">{row.field}</td>
-              <td data-column="مقدار قدیمی">{row.old_value}</td>
-              <td data-column="مقدار جدید">{row.new_value}</td>
-            </tr>
+            <Row key={row.id} row={row} />
           ))}
         </tbody>
       </table>
