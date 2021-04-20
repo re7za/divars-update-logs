@@ -1,11 +1,11 @@
 import "./style.css";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 // Data
 import data from "../../mock/data.json";
 
 // Utils
-import { filter } from "./utils";
+import { filter, createBinarySearchTree } from "./utils";
 
 // Misc
 import FilterInputs from "../../components/FilterInputs";
@@ -15,9 +15,11 @@ const Updates = () => {
   const [filters, setFilters] = useState([]);
   const [mutableData, setMutableData] = useState(data);
 
+  const BSTreeRef = useRef(createBinarySearchTree(data));
+
   const handleFiltersChange = (newFilters) => {
     setFilters([...newFilters]);
-    filter(data, setMutableData, newFilters);
+    filter(data, BSTreeRef, setMutableData, newFilters);
   };
 
   return (

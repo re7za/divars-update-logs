@@ -11,11 +11,11 @@ const Pagination = (props) => {
 
   return (
     <ul className="pagination-numbers">
-      {currentPage < 7 ? (
+      {currentPage < 5 ? (
         <>
           {pageNumbers.map(
             (number) =>
-              number < 10 && (
+              number < 6 && (
                 <li
                   className={
                     number !== currentPage
@@ -40,7 +40,7 @@ const Pagination = (props) => {
             {pageNumbers.length}
           </li>
         </>
-      ) : currentPage < pageNumbers.length - 7 ? (
+      ) : currentPage < pageNumbers.length - 3 ? (
         <>
           <li
             className="pagination-number"
@@ -51,7 +51,7 @@ const Pagination = (props) => {
             {1}
           </li>
           <span className="pagination-space">...</span>
-          {Array.from({ length: 9 }, (v, i) => currentPage - 4 + i).map(
+          {Array.from({ length: 5 }, (v, i) => currentPage - 2 + i).map(
             (number) => (
               <li
                 className={
@@ -88,7 +88,7 @@ const Pagination = (props) => {
             {1}
           </li>
           <span className="pagination-space">...</span>
-          {Array.from({ length: 9 }, (v, i) => pageNumbers.length - 8 + i).map(
+          {Array.from({ length: 5 }, (v, i) => pageNumbers.length - 4 + i).map(
             (number) => (
               <li
                 className={
