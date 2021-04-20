@@ -4,7 +4,7 @@
   margin: 50px auto 20px;
 }
 
-.table-root tr:nth-of-type(odd) {
+.table-root tr:nth-of-type(even) {
   background: #eee;
 }
 
