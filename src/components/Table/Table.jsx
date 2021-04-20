@@ -1,11 +1,12 @@
 import "./style.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Lib
 import Pagination from "../../lib/view-coms/Pagination";
 
 // Utils
 import { sortData } from "./utils";
+import { replaceUrlParams } from "../../lib/utils/replaceUrlParams/replaceUrlParams";
 
 const itemPerPage = 10;
 const sortInfo = {
@@ -16,12 +17,20 @@ const sortInfo = {
 const Table = (props) => {
   const { data, setData } = props;
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // url
+  const urlParams = new URLSearchParams(window.location.search);
+  let urlParamsPage = Number(urlParams.get("page"));
+
+  console.log("table is rendering..");
+  const [currentPage, setCurrentPage] = useState(
+    urlParamsPage ? urlParamsPage : 1
+  );
   const indexOfLastRow = currentPage * itemPerPage;
   const indexOfFirstRow = indexOfLastRow - itemPerPage;
   const currentData = data.slice(indexOfFirstRow, indexOfLastRow);
 
   const handlePaginationClick = (newPage) => {
+    replaceUrlParams({ queryParam: "page", value: newPage });
     setCurrentPage(Number(newPage));
   };
 
@@ -37,6 +46,14 @@ const Table = (props) => {
 
     sortData([...data], setData, sortInfo);
   };
+
+  /* eslint-disable */
+  useEffect(() => {
+    const urlPageNumber = Number(urlParams.get("page"));
+    console.log(urlPageNumber, currentPage);
+    if (urlPageNumber !== currentPage) setCurrentPage(urlPageNumber);
+  });
+  /* eslint-enable */
 
   return (
     <div className="table-root">
