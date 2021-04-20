@@ -1,8 +1,25 @@
 import "./style.css";
-import React from "react";
+import React, { useState } from "react";
+
+// Lib
+import Pagination from "../../lib/view-coms/Pagination";
+
+const itemPerPage = 10;
 
 const Table = (props) => {
   const { data } = props;
+
+  /* eslint-disable */
+  const [mutableData, setMutableData] = useState(data);
+  /* eslint-enable */
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastRow = currentPage * itemPerPage;
+  const indexOfFirstRow = indexOfLastRow - itemPerPage;
+  const currentData = mutableData.slice(indexOfFirstRow, indexOfLastRow);
+
+  const handlePaginationClick = (newPage) => {
+    setCurrentPage(Number(newPage));
+  };
 
   return (
     <div className="table-root">
@@ -18,7 +35,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((row) => (
+          {currentData?.map((row) => (
             <tr key={row.id}>
               <td data-column="نام تغییر دهنده">{row.name}</td>
               <td data-column="تاریخ">{row.date}</td>
@@ -30,6 +47,14 @@ const Table = (props) => {
           ))}
         </tbody>
       </table>
+      <div className="table-pagination">
+        <Pagination
+          currentPage={currentPage}
+          dataLength={mutableData.length}
+          itemPerPage={itemPerPage}
+          paginationOnClick={handlePaginationClick}
+        />
+      </div>
     </div>
   );
 };

@@ -1,20 +1,21 @@
-table {
+.table-root table {
   width: 100%;
   border-collapse: collapse;
-  margin: 50px auto;
+  margin: 50px auto 20px;
 }
 
-tr:nth-of-type(odd) {
-  background: #eee;
+.table-root .table-root tr:nth-of-type(odd) {
+  background: #ddd;
 }
 
-th {
+.table-root th {
   background: #bbeeff;
   color: #222;
   font-weight: bold;
+  cursor: pointer;
 }
 
-td,
+.table-root td,
 th {
   padding: 10px;
   border: 1px solid #ccc;
@@ -23,7 +24,7 @@ th {
 }
 
 @media only screen and (max-width: 960px) {
-  table,
+  .table-root table,
   thead,
   tbody,
   th,
@@ -32,25 +33,25 @@ th {
     display: block;
   }
 
-  thead tr {
+  .table-root thead tr {
     position: absolute;
     /* not display: none;, for accessibility */
     top: -9999px;
     left: -9999px;
   }
 
-  tr {
+  .table-root tr {
     border: 1px solid #ccc;
   }
 
-  td {
+  .table-root td {
     border: none;
     border-bottom: 1px solid #eee;
     position: relative;
     padding-right: 40%;
   }
 
-  td:before {
+  .table-root td:before {
     position: absolute;
     top: 6px;
     right: 6px;
@@ -61,4 +62,9 @@ th {
     color: #000;
     font-weight: bold;
   }
+}
+
+.table-pagination {
+  display: flex;
+  justify-content: center;
 }
