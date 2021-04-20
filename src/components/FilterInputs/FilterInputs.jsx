@@ -1,13 +1,24 @@
 import "./style.css";
-import React from "react";
+import React, { useEffect } from "react";
 
 // Lib
 import Input from "../../lib/view-coms/Input";
 
+// Utils
+import { modifyFiltersInUrl, getUrlFilterParams } from "./utils";
+import { replaceUrlParams } from "../../lib/utils/replaceUrlParams/replaceUrlParams";
+
 const FilterInputs = (props) => {
   const { filters, onFiltersChange } = props;
 
-  const handleFiltersChange = (type, text) => {
+  const changeFilter = (newFilters) => {
+    replaceUrlParams({ queryParam: "page", value: 1 });
+    modifyFiltersInUrl(newFilters);
+
+    onFiltersChange(newFilters);
+  };
+
+  const handleFiltersChange = (type, value) => {
     let existIndex = -1;
     for (const i in filters) {
       if (filters[i].type === type) {
@@ -18,42 +29,44 @@ const FilterInputs = (props) => {
 
     if (existIndex === -1) {
       // add
-      if (text) onFiltersChange([...filters, { type, text }]);
+      if (value) changeFilter([...filters, { type, value }]);
     } else {
-      if (text) {
+      if (value) {
         // update
-        onFiltersChange(
+        changeFilter(
           filters.map((item) =>
-            item.type !== type ? { ...item } : { type, text }
+            item.type !== type ? { ...item } : { type, value }
           )
         );
       } else {
         // remove
-        onFiltersChange(filters.filter((item) => item.type !== type));
+        changeFilter(filters.filter((item) => item.type !== type));
       }
     }
   };
+
+  /* eslint-disable */
+  useEffect(() => {
+    onFiltersChange(getUrlFilterParams());
+  }, []);
+  /* eslint-enable */
 
   return (
     <div className="filterInputs-root">
       <div className="filterInputs-input flex-grow-3">
         <Input
-          type={"name"}
+          type="name"
           title="نام تغییر دهنده"
           isRTL={true}
           onValueChange={handleFiltersChange}
         />
       </div>
       <div className="filterInputs-input flex-grow-1">
-        <Input
-          type={"date"}
-          title="تاریخ"
-          onValueChange={handleFiltersChange}
-        />
+        <Input type="date" title="تاریخ" onValueChange={handleFiltersChange} />
       </div>
       <div className="filterInputs-input flex-grow-5">
         <Input
-          type={"title"}
+          type="title"
           title="نام آگهی"
           isRTL={true}
           onValueChange={handleFiltersChange}
@@ -61,7 +74,7 @@ const FilterInputs = (props) => {
       </div>
       <div className="filterInputs-input flex-grow-3">
         <Input
-          type={"field"}
+          type="field"
           title="فیلد"
           isRTL={true}
           onValueChange={handleFiltersChange}

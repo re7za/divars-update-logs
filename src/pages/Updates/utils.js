@@ -7,8 +7,8 @@ export const filter = (data, setData, filters) => {
       .filter((filter) => filter.type !== "date")
       .forEach((filter) => {
         match &= dataItem[filter.type]
-          .toLowerCase()
-          .includes(filter.text.toLowerCase());
+          ?.toLowerCase()
+          ?.includes(filter.value.toLowerCase());
       });
     return match;
   });

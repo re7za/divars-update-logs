@@ -4,18 +4,21 @@ import React, { useState } from "react";
 const Input = (props) => {
   const { title, type, isRTL, inputType, onValueChange } = props;
 
-  const [value, setValue] = useState("");
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlParam = urlParams.get(type);
+
+  const [value, setValue] = useState(urlParam ?? "");
   const [valueTimeout, setValueTimeout] = useState();
 
   const handleChangeValue = (e) => {
     clearTimeout(valueTimeout);
 
-    const text = e.target.value;
-    setValue(text);
+    const value = e.target.value;
+    setValue(value);
 
     setValueTimeout(
       setTimeout(() => {
-        onValueChange(type, text);
+        onValueChange(type, value);
       }, 500)
     );
   };

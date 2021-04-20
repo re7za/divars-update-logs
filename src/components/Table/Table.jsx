@@ -19,9 +19,8 @@ const Table = (props) => {
 
   // url
   const urlParams = new URLSearchParams(window.location.search);
-  let urlParamsPage = Number(urlParams.get("page"));
+  const urlParamsPage = Number(urlParams.get("page"));
 
-  console.log("table is rendering..");
   const [currentPage, setCurrentPage] = useState(
     urlParamsPage ? urlParamsPage : 1
   );
@@ -50,8 +49,7 @@ const Table = (props) => {
   /* eslint-disable */
   useEffect(() => {
     const urlPageNumber = Number(urlParams.get("page"));
-    console.log(urlPageNumber, currentPage);
-    if (urlPageNumber !== currentPage) setCurrentPage(urlPageNumber);
+    if (urlPageNumber != currentPage) setCurrentPage(urlPageNumber);
   });
   /* eslint-enable */
 
