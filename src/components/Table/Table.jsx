@@ -4,7 +4,14 @@ import React, { useState } from "react";
 // Lib
 import Pagination from "../../lib/view-coms/Pagination";
 
+// Utils
+import { sortData } from "./utils";
+
 const itemPerPage = 10;
+const sortInfo = {
+  soryBy: "",
+  sortOrder: "",
+};
 
 const Table = (props) => {
   const { data } = props;
@@ -21,17 +28,30 @@ const Table = (props) => {
     setCurrentPage(Number(newPage));
   };
 
+  const handleHeaderClick = async (value) => {
+    if (sortInfo.soryBy === value) {
+      sortInfo.sortOrder === "topToBottom"
+        ? (sortInfo.sortOrder = "bottomToTop")
+        : (sortInfo.sortOrder = "topToBottom");
+    } else {
+      sortInfo.soryBy = value;
+      sortInfo.sortOrder = "topToBottom";
+    }
+
+    sortData([...mutableData], setMutableData, sortInfo);
+  };
+
   return (
     <div className="table-root">
       <table>
         <thead>
           <tr>
-            <th>نام تغییر دهنده</th>
-            <th>تاریخ</th>
-            <th>نام آگهی</th>
-            <th>فیلد</th>
-            <th>مقدار قدیمی</th>
-            <th>مقدار جدید</th>
+            <th onClick={() => handleHeaderClick("name")}>نام تغییر دهنده</th>
+            <th onClick={() => handleHeaderClick("date")}>تاریخ</th>
+            <th onClick={() => handleHeaderClick("title")}>نام آگهی</th>
+            <th onClick={() => handleHeaderClick("field")}>فیلد</th>
+            <th onClick={() => handleHeaderClick("old_value")}>مقدار قدیمی</th>
+            <th onClick={() => handleHeaderClick("new_value")}>مقدار جدید</th>
           </tr>
         </thead>
         <tbody>
